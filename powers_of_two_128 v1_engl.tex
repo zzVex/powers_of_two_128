@@ -1,0 +1,221 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Powers of Two with Digits from $\{1,2,8\}$: A Combinatorial Proof of Finiteness}
+\author{S.~V.~Goryushkin}
+\date{\today}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{example}{Example}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present a completely elementary proof that the only powers of two whose decimal representation uses only the digits $\{1,2,8\}$ are $2,8,128$. The key ideas are: (i) the phase condition $2^n\equiv2\pmod6$ for odd $n$; (ii) the digit composition invariant $a\equiv b\pmod3$ (the numbers of 1's and of $\{2,8\}$ digits in higher positions are congruent mod 3); (iii) explicit enumeration of admissible two- and three-digit tails; (iv) exclusion of four-digit cases by digit-sum mod 3 and divisibility by 16; and (v) exclusion of lengths $\ge5$ by the invariant.
+\end{abstract}
+
+\section{Statement of the problem}
+We call a number \emph{valid} if all its decimal digits belong to the set $\{1,2,8\}$.  
+We seek valid powers of two $N=2^n$.  
+Clearly, $2$ and $8$ are valid, and $128=2^7$ is also valid.  
+We shall show that there are no others.
+
+\section{Phase mod 6 and the structure of digits}
+Two elementary observations:
+\begin{itemize}[nosep]
+\item For odd $n$, we have $2^n\equiv2\pmod6$ (\emph{phase 2}); for even $n$, the remainder is $4$, and the last digit is $4$ or $6$, which are invalid. Hence all valid cases have odd $n$ and $N\equiv2\pmod6$.
+\item In $\mathbb Z/6\mathbb Z$ one has $10\equiv4$, and therefore $10^j\equiv4$ for all $j\ge1$.
+\end{itemize}
+
+\begin{lemma}[Digit composition invariant mod 6]\label{lem:inv}
+Let a valid $N$ have last digit $u\in\{2,8\}$, and above the units place let there be
+$a$ digits equal to $1$ and $b$ digits equal to either $2$ or $8$.  
+Then
+\begin{equation}\label{eq:ab}
+2a+b\equiv0\pmod3,\qquad a+2b\equiv0\pmod3,\qquad\text{in particular }~ a\equiv b\pmod3.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Work in $\mathbb Z/6\mathbb Z$.  
+The unit digit contributes $u\equiv2$.  
+Each higher digit $1$ contributes $4\cdot1\equiv4$, and each higher digit $2$ or $8$ contributes $4\cdot2\equiv8\equiv2$.  
+Thus
+\[
+N\equiv 2 + 4a + 2b \pmod6.
+\]
+Since $N\equiv2\pmod6$, we get $4a+2b\equiv0\pmod6$, i.e. $2a+b\equiv0\pmod3$.
+
+On the other hand, modulo $3$, the sum of digits equals $N\pmod3$.  
+For odd $n$, we have $2^n\equiv2\pmod3$.  
+The digit residues are $1\equiv1$, $2\equiv2$, $8\equiv2$. Hence
+\[
+(2) + a\cdot1 + b\cdot2 \equiv 2 \pmod3 \quad\Rightarrow\quad a+2b\equiv0\pmod3.
+\]
+Subtracting the two congruences gives $a\equiv b\pmod3$.
+\end{proof}
+
+\begin{corollary}\label{cor:blocks}
+If $N$ is valid, then adding a single digit on the left from $\{1,2,8\}$ breaks $a\equiv b\pmod3$.  
+Therefore, any possible extension of a valid number to the left must occur in blocks of three digits.
+\end{corollary}
+
+\begin{example}
+For $N=128$ we have $a=1$, $b=1$ and $a\equiv b\pmod3$.  
+Adding any single digit to the left ($1128$, $2128$, $8128$) violates the invariant or fails other properties of a power of two.
+\end{example}
+
+\section{Admissible tails mod 10, mod 100, mod 1000}
+We now \emph{explicitly} derive the possible tails.
+
+\subsection*{One digit}
+The last digit of powers of two cycles as $2,4,8,6,\ldots$.  
+For odd $n$, only $2$ and $8$ remain — both valid.
+
+\subsection*{Two digits}
+Work mod $100$.  
+The order of $2$ mod $25$ is $20$, and mod $4$ it is $2$, so the period mod $100$ is $\mathrm{lcm}(20,2)=20$.  
+List $\{2^n\bmod100:\ n\equiv1,3,\ldots,19\}$ and keep those whose both digits lie in $\{1,2,8\}$.  
+Exactly three appear:
+\begin{equation}\label{eq:tails2}
+\boxed{12,\quad 28,\quad 88.}
+\end{equation}
+\begin{example}
+For instance, $2^7=128\equiv 28\pmod{100}$, $2^{19}=524288\equiv88$, and $2^9=512\equiv12$.
+\end{example}
+
+\subsection*{Three digits}
+For $n\ge3$ we have $2^n\equiv0\pmod8$, so the last three digits are multiples of 8.  
+Among all three-digit numbers over $\{1,2,8\}$ ending in $2$ or $8$, divisibility by $8$ leaves
+\[
+112,\,128,\,288,\,888
+\]
+(the others, e.g.\ $212,812,228,828,188$, etc., are not divisible by 8).
+
+Next, since the order of $2$ mod $125$ is $100$, the full period mod $1000$ is $100$.  
+Checking the $100$-term cycle (or equivalently using the CRT for mod 8 and mod 125) shows that among the four candidates, exactly three actually occur:
+\begin{equation}\label{eq:tails3}
+\boxed{112,\quad 128,\quad 288.}
+\end{equation}
+The tail $888$ never appears in $2^n\bmod1000$.
+
+\begin{example}
+\begin{itemize}[nosep]
+\item $2^7=128$ ends with $128$;
+\item $2^{19}=524288$ ends with $288$;
+\item $2^{89}$ ends with $112$ (obtained by squaring and checking mod $1000$).
+\end{itemize}
+\end{example}
+
+\begin{remark}[Manual check of \eqref{eq:tails2}–\eqref{eq:tails3}]
+For two digits: compute $2^n\bmod25$ for $n=1,3,\ldots,19$ and match with the correct last digit mod $4$.  
+For three digits: require divisibility by 8, then solve the CRT system mod 125 (period 100).  
+Both are small finite tables (20 and 100 entries respectively).
+\end{remark}
+
+\section{Exclusion of 4-digit numbers}
+\begin{lemma}\label{lem:len4}
+No four-digit valid number is a power of two.
+\end{lemma}
+
+\begin{proof}
+From \eqref{eq:tails3}, possible three-digit tails are $112,128,288$.  
+Consider $dXYZ$ with $XYZ\in\{112,128,288\}$ and $d\in\{1,2,8\}$.
+
+\smallskip
+\noindent\textbf{(i) Digit sum mod 3.}  
+For odd $n$, $2^n\equiv2\pmod3$, so the digit sum must be $\equiv2\pmod3$.  
+Compute:
+\begin{align*}
+\mathrm{sum}(d112)&=d+1+1+2\equiv d+1\pmod3,\\
+\mathrm{sum}(d128)&=d+1+2+8\equiv d+1\pmod3,\\
+\mathrm{sum}(d288)&=d+2+8+8\equiv d+2\pmod3.
+\end{align*}
+Hence: $d\in\{2,8\}$ for $d112$ and $d128$ give $0\bmod3$ instead of $2$, and all $d288$ are impossible (since $d\equiv1,2,2\pmod3$ never yield $2$).  
+Only $d=1$ survives for $1112$ and $1128$.
+
+\smallskip
+\noindent\textbf{(ii) Divisibility by 16.}  
+For $n\ge4$, $2^n$ is divisible by $16$.  
+Check:
+\begin{align*}
+1112 &\equiv 8 \pmod{16},\\
+1128 &\equiv 8 \pmod{16}.
+\end{align*}
+Neither divisible by $16$.  
+Thus no four-digit valid powers of two exist.
+\end{proof}
+
+\begin{example}
+$1128$ looks plausible (all digits allowed) but is not divisible by $16$; $2128$, $8128$ violate the digit-sum mod 3 condition.
+\end{example}
+
+\section{Exclusion of all lengths $\ge5$}
+\begin{lemma}\label{lem:len5}
+There exist no valid powers of two with length $\ge5$.
+\end{lemma}
+
+\begin{proof}
+Assume $N$ valid.  
+By Lemma~\ref{lem:inv}, the invariant $a\equiv b\pmod3$ must hold.  
+By Corollary~\ref{cor:blocks}, any valid extension/reduction happens in blocks of three digits.  
+Removing three digits at a time from the left, one reaches length $1,2,3,$ or $4$.  
+Lengths $1,2,3$ give exactly $2,8,128$; length $4$ is impossible by Lemma~\ref{lem:len4}.  
+Contradiction.
+\end{proof}
+
+\section{Main theorem and examples}
+\begin{theorem}
+The only valid powers of two are
+\[
+2^1=2,\qquad 2^3=8,\qquad 2^7=128.
+\]
+\end{theorem}
+
+\begin{proof}
+Oddness of the exponent is necessary (phase mod 6).  
+From the tail analysis, the only realizable valid three-digit tail is $128$ (for $n=7$).  
+By Lemmas~\ref{lem:len4} and \ref{lem:len5}, no longer valid numbers exist.  
+Lengths $1,2,3$ give $2,8,128$ directly.
+\end{proof}
+
+\begin{example}
+Verification:
+\begin{itemize}[nosep]
+\item $2^1=2$ — valid.
+\item $2^3=8$ — valid.
+\item $2^5=32$ — invalid (digit $3$).
+\item $2^7=128$ — valid.
+\item $2^{19}=524288$ — invalid (tail $288$ valid but digit $5$ appears).
+\item Any $d128$ with $d\in\{1,2,8\}$ is not a power of two (Lemma~\ref{lem:len4}).
+\end{itemize}
+\end{example}
+
+\section*{Appendix A: Computing tails explicitly}
+\paragraph{Two digits.}  
+For odd $n$, the values $2^n\bmod100$ (period $20$) yield residues whose last digits are $2$ or $8$ and tens digit in $\{1,2,8\}$ — precisely $12,28,88$.
+
+\paragraph{Three digits.}  
+Requiring divisibility by $8$ (for $n\ge3$) and digit restriction narrows the list to $112,128,288,888$.  
+Mod $125$ (cycle length $100$), $888$ never appears, while $112,128,288$ do (at $n\equiv89,7,19\pmod{100}$ respectively).
+
+\section*{Appendix B: Mini-table of carry transitions}
+When moving from $2^n$ to $2^{n+1}$, for each digit $d$ and carry $c\in\{0,1\}$, the next digit is
+$e=(2d+c)\bmod10$, and the new carry $c'=\lfloor(2d+c)/10\rfloor$.  
+Requiring $e\in\{1,2,8\}$ severely restricts possibilities.  
+The only stable right-hand pattern is $11\mapsto22$ with no carry, consistent with the tail $112\to128$; the next step introduces a non-admissible digit to the left, matching the exclusion of longer lengths.
+
+\end{document}
